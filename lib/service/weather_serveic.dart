@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:p/model/news_service_model.dart';
 
 class weatherServeic {
   Future<WeatherInfoModle> getWitherInfo({required String city}) async {
@@ -25,16 +26,4 @@ class weatherServeic {
     }
     return result;
   }
-}
-
-class WeatherInfoModle {
-  String cityName, status;
-  double avg, maxTemp, minTmp;
-  WeatherInfoModle({
-    required this.avg,
-    required this.cityName,
-    required this.maxTemp,
-    required this.minTmp,
-    required this.status,
-  });
 }
