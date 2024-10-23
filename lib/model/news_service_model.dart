@@ -1,5 +1,5 @@
 class WeatherInfoModle {
-  String cityName, status;
+  String cityName, status, lastTime;
   double avg, maxTemp, minTmp;
   WeatherInfoModle({
     required this.avg,
@@ -7,6 +7,7 @@ class WeatherInfoModle {
     required this.maxTemp,
     required this.minTmp,
     required this.status,
+    required this.lastTime,
   });
   factory WeatherInfoModle.fromJson(jsonn) {
     return WeatherInfoModle(
@@ -15,6 +16,7 @@ class WeatherInfoModle {
       maxTemp: jsonn['forecast']["forecastday"]['day']['maxtemp_c'],
       minTmp: jsonn['forecast']["forecastday"]['day']['mintemp_c'],
       status: jsonn['forecast']["forecastday"]['day']['condition']['text'],
+      lastTime: jsonn['current']['last_updated'],
     );
   }
 }
