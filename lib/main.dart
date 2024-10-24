@@ -9,8 +9,8 @@ import 'package:p/widgets/weather_info_body.dart';
 
 void main() async {
   runApp(const weatherApp());
-  WeatherInfoModle test = await weatherServeic().getWitherInfo(city: 'Cairo');
-  print(test.minTmp);
+  WeatherInfoModle test = await weatherServeic().getWitherInfo(city: 'madrid');
+  log(test.cityName);
 }
 
 class weatherApp extends StatelessWidget {

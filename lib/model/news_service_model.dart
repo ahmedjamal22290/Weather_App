@@ -11,7 +11,7 @@ class WeatherInfoModle {
   });
   factory WeatherInfoModle.fromJson(jsonn) {
     return WeatherInfoModle(
-      avg: jsonn['forecast']["forecastday"]['day']['avgtemp_c'],
+      avg: jsonn['forecast']["forecastday"][0]['day']['avgtemp_c'],
       cityName: jsonn['location']['name'],
       maxTemp: jsonn['forecast']["forecastday"][0]['day']['maxtemp_c'],
       minTmp: jsonn['forecast']["forecastday"][0]['day']['mintemp_c'],
