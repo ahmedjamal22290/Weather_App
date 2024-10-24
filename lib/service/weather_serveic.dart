@@ -15,15 +15,16 @@ class weatherServeic {
       maxTemp: 0,
       minTmp: 0,
       status: '',
+      lastTime: '',
     );
-    for (var element in jsonData['forecast']["forecastday"]) {
-      result = WeatherInfoModle(
-          avg: element['day']['avgtemp_c'],
-          cityName: jsonData['location']['name'],
-          maxTemp: element['day']['maxtemp_c'],
-          minTmp: element['day']['mintemp_c'],
-          status: element['day']['condition']['text']);
-    }
+    // for (var element in jsonData['forecast']["forecastday"]) {
+    //   result = WeatherInfoModle(
+    //       avg: element['day']['avgtemp_c'],
+    //       cityName: jsonData['location']['name'],
+    //       maxTemp: element['day']['maxtemp_c'],
+    //       minTmp: element['day']['mintemp_c'],
+    //       status: element['day']['condition']['text']);
+    // }
     return result;
   }
 }

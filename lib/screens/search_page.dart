@@ -27,9 +27,7 @@ class SearchPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                onChanged: (value) {
-                  log(value);
-                },
+                onSubmitted: (value) {},
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 25, horizontal: 15),
