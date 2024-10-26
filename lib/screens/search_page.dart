@@ -1,10 +1,21 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:p/model/news_service_model.dart';
+import 'package:p/screens/home_page.dart';
+import 'package:p/service/weather_serveic.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+bool dataFounded = false;
+WeatherInfoModle? weathermodel;
+
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +38,11 @@ class SearchPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                onSubmitted: (value) {},
+                onSubmitted: (value) async {
+                  weathermodel =
+                      await weatherServeic().getWitherInfo(city: value);
+                  Navigator.pop(context);
+                },
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 25, horizontal: 15),
