@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
+import 'package:p/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:p/model/news_service_model.dart';
 import 'package:p/screens/search_page.dart';
 import 'package:p/widgets/no_search_view.dart';
 import 'package:p/widgets/weather_info_body.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +17,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return blocProvider(
+    return BlocProvider(
+      create: (context) => GetWeatherCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -57,7 +60,17 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: const Color(0xFF3163B9),
           ),
           backgroundColor: Colors.white,
-          body: weathermodel == null ? NoSearchView() : weatherInfoBody(),
+          body: BlocBuilder<GetWeatherCubit, weatherState>(
+            builder: (context, State) {
+              if (State is noWeatherState) {
+                return NoSearchView();
+              } else if (State is weatherLoadedState) {
+                return weatherInfoBody();
+              } else {
+                return Text('oops there was an error');
+              }
+            },
+          ),
         ),
       ),
     );

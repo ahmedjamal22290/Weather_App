@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:p/model/news_service_model.dart';
 import 'package:p/screens/home_page.dart';
 import 'package:p/service/weather_serveic.dart';
@@ -39,8 +41,10 @@ class _SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 onSubmitted: (value) async {
-                  weathermodel =
-                      await weatherServeic().getWitherInfo(city: value);
+                  BlocProvider.of<GetWeatherCubit>(context)
+                      .getWeather(cityName: value);
+                  // weathermodel =
+                  //     await weatherServeic().getWitherInfo(city: value);
                   Navigator.pop(context);
                 },
                 decoration: InputDecoration(
