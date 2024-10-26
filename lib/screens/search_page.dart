@@ -43,8 +43,6 @@ class _SearchPageState extends State<SearchPage> {
                 onSubmitted: (value) async {
                   BlocProvider.of<GetWeatherCubit>(context)
                       .getWeather(cityName: value);
-                  // weathermodel =
-                  //     await weatherServeic().getWitherInfo(city: value);
                   Navigator.pop(context);
                 },
                 decoration: InputDecoration(
