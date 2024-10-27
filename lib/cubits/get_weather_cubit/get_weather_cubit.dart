@@ -11,7 +11,7 @@ class GetWeatherCubit extends Cubit<weatherState> {
     try {
       WeatherInfoModle weathermodel =
           await weatherServeic().getWitherInfo(city: cityName);
-      emit(weatherLoadedState());
+      emit(weatherLoadedState(weatherInfoModle: weathermodel));
     } catch (e) {
       emit(weatherFailuerState());
     }

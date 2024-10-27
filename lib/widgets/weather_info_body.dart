@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:p/model/news_service_model.dart';
 
 class weatherInfoBody extends StatelessWidget {
-  const weatherInfoBody({super.key});
-
+  const weatherInfoBody({super.key, required this.weatherInfo});
+  final WeatherInfoModle weatherInfo;
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Alexandria',
+            weatherInfo.cityName,
             style: TextStyle(
               fontSize: 28,
               color: Colors.black,
@@ -17,7 +18,14 @@ class weatherInfoBody extends StatelessWidget {
             ),
           ),
           Text(
-            'Updated at 23:46 ',
+            weatherInfo.country,
+            style: TextStyle(
+              fontSize: 16,
+              color: const Color(0xFF4C4C4C),
+            ),
+          ),
+          Text(
+            'Last Update:${weatherInfo.lastTime.substring(11)}',
             style: TextStyle(
               fontSize: 16,
               color: const Color(0xFF4C4C4C),
@@ -30,10 +38,13 @@ class weatherInfoBody extends StatelessWidget {
             padding: const EdgeInsets.only(left: 5.0, right: 5),
             child: Row(
               children: [
-                Image.asset('assets/images/clear.png'),
+                Image.network(
+                  'https:${weatherInfo.image}',
+                  scale: 0.7,
+                ),
                 Spacer(),
                 Text(
-                  '19',
+                  weatherInfo.avg.toString(),
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 30,
@@ -44,14 +55,14 @@ class weatherInfoBody extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      'MaxTemp:24',
+                      'MaxTemp:${weatherInfo.maxTemp.round()}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      'MinTemp:16',
+                      'MinTemp:${weatherInfo.minTmp.round()}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -66,7 +77,7 @@ class weatherInfoBody extends StatelessWidget {
             height: 20,
           ),
           Text(
-            'Clear',
+            weatherInfo.status,
             style: TextStyle(
               fontSize: 28,
               color: Colors.black,

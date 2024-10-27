@@ -65,7 +65,9 @@ class _HomePageState extends State<HomePage> {
               if (State is noWeatherState) {
                 return NoSearchView();
               } else if (State is weatherLoadedState) {
-                return weatherInfoBody();
+                return weatherInfoBody(
+                  weatherInfo: State.weatherInfoModle,
+                );
               } else {
                 return Text('oops there was an error');
               }
