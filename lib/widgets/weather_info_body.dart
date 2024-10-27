@@ -25,7 +25,7 @@ class weatherInfoBody extends StatelessWidget {
             ),
           ),
           Text(
-            'Last Update:${weatherInfo.lastTime.substring(11)}',
+            'Last Update:${weatherInfo.lastTime.hour}:${weatherInfo.lastTime.minute}',
             style: TextStyle(
               fontSize: 16,
               color: const Color(0xFF4C4C4C),
@@ -88,4 +88,8 @@ class weatherInfoBody extends StatelessWidget {
       ),
     );
   }
+}
+
+DateTime stringToData(String value) {
+  return DateTime.parse(value);
 }

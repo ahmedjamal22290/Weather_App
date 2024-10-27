@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 class WeatherInfoModle {
-  String cityName, status, lastTime, image, country;
+  String cityName, status, image, country;
+  DateTime lastTime;
   double avg, maxTemp, minTmp;
   WeatherInfoModle({
     required this.country,
@@ -22,7 +23,7 @@ class WeatherInfoModle {
       maxTemp: jsonn['forecast']["forecastday"][0]['day']['maxtemp_c'],
       minTmp: jsonn['forecast']["forecastday"][0]['day']['mintemp_c'],
       status: jsonn['forecast']["forecastday"][0]['day']['condition']['text'],
-      lastTime: jsonn['current']['last_updated'],
+      lastTime: DateTime.parse(jsonn['current']['last_updated']),
     );
   }
 }
