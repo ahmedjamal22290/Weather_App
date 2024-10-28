@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
+import 'package:p/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:p/model/news_service_model.dart';
 import 'package:p/screens/home_page.dart';
 import 'package:p/service/weather_serveic.dart';
@@ -21,13 +22,60 @@ class weatherApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.amber,
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.red,
-          ),
+          useMaterial3: false,
+          primarySwatch: getColorTheme('sunny'),
         ),
         home: HomePage(),
       ),
     );
+  }
+
+  MaterialColor getColorTheme(String condition) {
+    switch (condition.toLowerCase()) {
+      case 'sunny':
+      case 'clear':
+        return Colors.amber;
+      case 'partly cloudy':
+        return Colors.yellow;
+      case 'cloudy':
+        return Colors.blueGrey;
+      case 'overcast':
+        return Colors.grey;
+      case 'mist':
+      case 'fog':
+      case 'freezing fog':
+        return Colors.blueGrey;
+      case 'patchy rain possible':
+      case 'light drizzle':
+      case 'light rain':
+        return Colors.lightBlue;
+      case 'moderate rain':
+      case 'heavy rain':
+      case 'torrential rain shower':
+        return Colors.blue;
+      case 'patchy snow possible':
+      case 'light snow':
+      case 'moderate snow':
+      case 'heavy snow':
+        return Colors.lightBlue;
+      case 'patchy sleet possible':
+      case 'light sleet':
+      case 'moderate or heavy sleet':
+        return Colors.indigo;
+      case 'thundery outbreaks possible':
+      case 'patchy light rain with thunder':
+      case 'moderate or heavy rain with thunder':
+        return Colors.deepPurple;
+      case 'ice pellets':
+      case 'light showers of ice pellets':
+      case 'moderate or heavy showers of ice pellets':
+        return Colors.cyan;
+      case 'freezing drizzle':
+      case 'patchy freezing drizzle possible':
+      case 'light freezing rain':
+        return Colors.lightBlue;
+      default:
+        return Colors.deepPurple;
+    }
   }
 }
