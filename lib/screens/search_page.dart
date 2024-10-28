@@ -30,7 +30,7 @@ class _SearchPageState extends State<SearchPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color(0xFF3163B9),
+        // backgroundColor: const Color(0xFF3163B9),
         foregroundColor: Colors.white,
       ),
       body: Center(

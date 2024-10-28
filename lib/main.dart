@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:p/model/news_service_model.dart';
 import 'package:p/screens/home_page.dart';
 import 'package:p/service/weather_serveic.dart';
@@ -13,8 +15,19 @@ void main() async {
 
 class weatherApp extends StatelessWidget {
   const weatherApp({super.key});
-
   Widget build(BuildContext context) {
-    return HomePage();
+    return BlocProvider(
+      create: (context) => GetWeatherCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.red,
+          ),
+        ),
+        home: HomePage(),
+      ),
+    );
   }
 }

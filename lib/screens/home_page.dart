@@ -17,63 +17,64 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetWeatherCubit(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            title: Row(
-              children: [
-                const Text(
-                  'Weather',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                const Text(
-                  'App',
-                  style: TextStyle(
-                      color: Colors.greenAccent, fontWeight: FontWeight.bold),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            const Text(
+              'Weather',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
-            actions: [
-              Builder(
-                builder: (context) => IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SearchPage();
-                        },
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                ),
-              )
-            ],
-            backgroundColor: const Color(0xFF3163B9),
-          ),
-          backgroundColor: Colors.white,
-          body: BlocBuilder<GetWeatherCubit, weatherState>(
-            builder: (context, State) {
-              if (State is noWeatherState) {
-                return NoSearchView();
-              } else if (State is weatherLoadedState) {
-                return weatherInfoBody(
-                  weatherInfo: State.weatherInfoModle,
-                );
-              } else {
-                return Text('oops there was an error');
-              }
-            },
-          ),
+            const Text(
+              'App',
+              style: TextStyle(
+                  color: Colors.greenAccent, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SearchPage();
+                    },
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 35,
+              ),
+            ),
+          )
+        ],
+        // backgroundColor: const Color(0xFF3163B9),
+      ),
+      // backgroundColor: Colors.white,
+      body: BlocBuilder<GetWeatherCubit, weatherState>(
+        builder: (context, State) {
+          if (State is noWeatherState) {
+            return NoSearchView();
+          } else if (State is weatherLoadedState) {
+            return weatherInfoBody(
+              weatherInfo: State.weatherInfoModle,
+            );
+          } else {
+            return const Center(
+                child: Text(
+              'oops there was an error',
+              style: TextStyle(
+                fontSize: 37,
+                fontWeight: FontWeight.bold,
+              ),
+            ));
+          }
+        },
       ),
     );
   }

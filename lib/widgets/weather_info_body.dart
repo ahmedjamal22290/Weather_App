@@ -3,6 +3,7 @@ import 'package:p/model/news_service_model.dart';
 
 class weatherInfoBody extends StatelessWidget {
   const weatherInfoBody({super.key, required this.weatherInfo});
+
   final WeatherInfoModle weatherInfo;
   Widget build(BuildContext context) {
     return Center(
