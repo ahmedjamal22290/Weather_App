@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_states.dart';
+import 'package:p/main.dart';
 import 'package:p/model/news_service_model.dart';
 import 'package:p/screens/search_page.dart';
 import 'package:p/widgets/no_search_view.dart';
@@ -59,10 +60,17 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<GetWeatherCubit, weatherState>(
         builder: (context, State) {
           if (State is noWeatherState) {
-            return NoSearchView();
+            return const NoSearchView();
           } else if (State is weatherLoadedState) {
-            return weatherInfoBody(
-              weatherInfo: State.weatherInfoModle,
+            return Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                getColorTheme(State.weatherInfoModle.status).withAlpha(60),
+                getColorTheme(State.weatherInfoModle.status),
+              ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+              child: weatherInfoBody(
+                weatherInfo: State.weatherInfoModle,
+              ),
             );
           } else {
             return const Center(
