@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p/cubits/dark_mode_cubit/dark_mode_cubit.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:p/main.dart';
@@ -18,14 +21,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _transtion;
+  late Animation<double> _rotate;
   late Animation<Offset> _transtionn;
   @override
   void initState() {
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 125));
-    _transtion = Tween(begin: -25.0, end: 25.0).animate(_controller);
+        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    _rotate = Tween<double>(begin: -0.4 * pi, end: 0).animate(_controller);
     _transtionn = Tween<Offset>(begin: Offset(-25, 0), end: Offset(25, 0))
         .animate(_controller);
 
@@ -63,30 +66,31 @@ class _HomePageState extends State<HomePage>
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color:
-                            BlocProvider.of<GetWeatherCubit>(context).darkMode
-                                ? const Color(0xFF272727)
-                                : Colors.white,
+                        color: BlocProvider.of<DarkModeCubit>(context).darkMode
+                            ? const Color(0xFF272727)
+                            : Colors.white,
                       ),
                       child: Transform.translate(
                         offset: _transtionn.value,
-                        child: IconButton(
-                          onPressed: () {
-                            BlocProvider.of<GetWeatherCubit>(context).darkMode
-                                ? _controller.reverse()
-                                : _controller.forward();
-                            BlocProvider.of<GetWeatherCubit>(context).darkMode =
-                                !BlocProvider.of<GetWeatherCubit>(context)
-                                    .darkMode;
-                          },
-                          icon: Icon(
-                            BlocProvider.of<GetWeatherCubit>(context).darkMode
-                                ? Icons.wb_sunny
-                                : Icons.mode_night,
-                            color: BlocProvider.of<GetWeatherCubit>(context)
-                                    .darkMode
-                                ? Colors.white
-                                : Colors.black,
+                        child: Transform.rotate(
+                          angle: _rotate.value,
+                          child: IconButton(
+                            onPressed: () {
+                              BlocProvider.of<DarkModeCubit>(context)
+                                  .ModeController();
+                              BlocProvider.of<DarkModeCubit>(context).darkMode
+                                  ? _controller.reverse()
+                                  : _controller.forward();
+                            },
+                            icon: Icon(
+                              BlocProvider.of<DarkModeCubit>(context).darkMode
+                                  ? Icons.wb_sunny
+                                  : Icons.mode_night,
+                              color: BlocProvider.of<DarkModeCubit>(context)
+                                      .darkMode
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                           ),
                         ),
                       ),

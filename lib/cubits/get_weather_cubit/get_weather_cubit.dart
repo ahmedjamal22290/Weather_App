@@ -17,8 +17,8 @@ class GetWeatherCubit extends Cubit<weatherState> {
     }
   }
 
-  void getDarkMode(bool darkModeUser) {
-    bool darkMode = darkModeUser;
-    emit(darkModeWeather(darkmode: darkMode));
-  }
+  // void getDarkMode() {
+  //   darkMode = !darkMode;
+  //   emit(darkModeWeather());
+  // }
 }

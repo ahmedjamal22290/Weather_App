@@ -10,9 +10,6 @@ class weatherLoadedState extends weatherState {
   weatherLoadedState({required this.weatherInfoModle});
 }
 
-class darkModeWeather extends weatherState {
-  bool darkmode;
-  darkModeWeather({required this.darkmode});
-}
+class darkModeWeather extends weatherState {}
 
 class weatherFailuerState extends weatherState {}

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p/cubits/dark_mode_cubit/dark_mode_cubit.dart';
+import 'package:p/cubits/dark_mode_cubit/dark_mode_states.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:p/model/news_service_model.dart';
@@ -17,24 +19,31 @@ void main() async {
 class weatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetWeatherCubit(),
-      child: Builder(
-        builder: (context) => BlocBuilder<GetWeatherCubit, weatherState>(
-          builder: (context, state) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                brightness: state is darkModeWeather
-                    ? Brightness.dark
-                    : Brightness.light,
-                useMaterial3: false,
-                primarySwatch: getColorTheme(
-                  state is weatherLoadedState
-                      ? state.weatherInfoModle.status
-                      : 'not',
-                ),
+      create: (context) => DarkModeCubit(),
+      child: BlocProvider(
+        create: (context) => GetWeatherCubit(),
+        child: BlocBuilder<DarkModeCubit, modes>(
+          builder: (context, modeState) {
+            return Builder(
+              builder: (context) => BlocBuilder<GetWeatherCubit, weatherState>(
+                builder: (context, state) {
+                  return MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    theme: ThemeData(
+                      brightness: modeState is darkModeStates?
+                          ? Brightness.dark
+                          : Brightness.light,
+                      useMaterial3: false,
+                      primarySwatch: getColorTheme(
+                        state is weatherLoadedState
+                            ? state.weatherInfoModle.status
+                            : 'not',
+                      ),
+                    ),
+                    home: HomePage(),
+                  );
+                },
               ),
-              home: HomePage(),
             );
           },
         ),
