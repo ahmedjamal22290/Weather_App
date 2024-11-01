@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p/cubits/get_weather_cubit/get_weather_cubit.dart';
+import 'package:p/data/city_names_and_country.dart';
 import 'package:p/model/news_service_model.dart';
 import 'package:p/screens/home_page.dart';
 import 'package:p/service/weather_serveic.dart';
@@ -40,11 +41,13 @@ class _SearchPageState extends State<SearchPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                keyboardType: TextInputType.text,
                 onSubmitted: (value) async {
                   BlocProvider.of<GetWeatherCubit>(context)
                       .getWeather(cityName: value);
                   Navigator.pop(context);
                 },
+                autofillHints: Names,
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 25, horizontal: 15),
