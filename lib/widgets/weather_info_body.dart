@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p/cubits/dark_mode_cubit/dark_mode_cubit.dart';
 import 'package:p/model/news_service_model.dart';
 
 class weatherInfoBody extends StatelessWidget {
@@ -22,14 +24,18 @@ class weatherInfoBody extends StatelessWidget {
             weatherInfo.country,
             style: TextStyle(
               fontSize: 16,
-              color: const Color(0xFF4C4C4C),
+              color: BlocProvider.of<DarkModeCubit>(context).darkMode
+                  ? Color.fromARGB(255, 192, 191, 191)
+                  : Color(0xFF4C4C4C),
             ),
           ),
           Text(
             'Last Update:${weatherInfo.lastTime.hour}:${weatherInfo.lastTime.minute}',
             style: TextStyle(
               fontSize: 16,
-              color: const Color(0xFF4C4C4C),
+              color: BlocProvider.of<DarkModeCubit>(context).darkMode
+                  ? Color.fromARGB(255, 192, 191, 191)
+                  : Color(0xFF4C4C4C),
             ),
           ),
           SizedBox(
