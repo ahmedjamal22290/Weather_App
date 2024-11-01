@@ -15,7 +15,25 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _transtion;
+  late Animation<Offset> _transtionn;
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 125));
+    _transtion = Tween(begin: -25.0, end: 25.0).animate(_controller);
+    _transtionn = Tween<Offset>(begin: Offset(-25, 0), end: Offset(25, 0))
+        .animate(_controller);
+
+    if (!BlocProvider.of<GetWeatherCubit>(context).darkMode) {
+      _controller.forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +53,47 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         actions: [
+          Row(
+            children: [
+              AnimatedBuilder(
+                  animation: _controller,
+                  builder: (BuildContext, _) {
+                    return Container(
+                      width: 100,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color:
+                            BlocProvider.of<GetWeatherCubit>(context).darkMode
+                                ? const Color(0xFF272727)
+                                : Colors.white,
+                      ),
+                      child: Transform.translate(
+                        offset: _transtionn.value,
+                        child: IconButton(
+                          onPressed: () {
+                            BlocProvider.of<GetWeatherCubit>(context).darkMode
+                                ? _controller.reverse()
+                                : _controller.forward();
+                            BlocProvider.of<GetWeatherCubit>(context).darkMode =
+                                !BlocProvider.of<GetWeatherCubit>(context)
+                                    .darkMode;
+                          },
+                          icon: Icon(
+                            BlocProvider.of<GetWeatherCubit>(context).darkMode
+                                ? Icons.wb_sunny
+                                : Icons.mode_night,
+                            color: BlocProvider.of<GetWeatherCubit>(context)
+                                    .darkMode
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  })
+            ],
+          ),
           Builder(
             builder: (context) => IconButton(
               onPressed: () {
@@ -73,14 +132,22 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else {
-            return const Center(
-                child: Text(
-              'oops there was an error',
-              style: TextStyle(
-                fontSize: 37,
-                fontWeight: FontWeight.bold,
-              ),
-            ));
+            return Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.center,
+                end: Alignment.bottomCenter,
+                colors: [Colors.redAccent, Colors.white],
+              )),
+              child: const Center(
+                  child: Text(
+                'oops there was an error',
+                style: TextStyle(
+                  fontSize: 37,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+            );
           }
         },
       ),

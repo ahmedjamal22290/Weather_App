@@ -24,6 +24,9 @@ class weatherApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
+                brightness: state is darkModeWeather
+                    ? Brightness.dark
+                    : Brightness.light,
                 useMaterial3: false,
                 primarySwatch: getColorTheme(
                   state is weatherLoadedState
@@ -41,8 +44,8 @@ class weatherApp extends StatelessWidget {
 }
 
 MaterialColor getColorTheme(String? condition) {
-  if (condition == null) {
-    return Colors.deepPurple;
+  if (condition == null || condition == "not") {
+    return Colors.red;
   }
   switch (condition.toLowerCase()) {
     case 'sunny':

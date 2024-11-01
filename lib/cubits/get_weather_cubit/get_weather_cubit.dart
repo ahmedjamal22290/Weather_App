@@ -7,6 +7,7 @@ import 'package:p/service/weather_serveic.dart';
 class GetWeatherCubit extends Cubit<weatherState> {
   GetWeatherCubit() : super(noWeatherState());
   WeatherInfoModle? weathermodel;
+  bool darkMode = false;
   getWeather({required String cityName}) async {
     try {
       weathermodel = await weatherServeic().getWitherInfo(city: cityName);
@@ -14,5 +15,10 @@ class GetWeatherCubit extends Cubit<weatherState> {
     } catch (e) {
       emit(weatherFailuerState());
     }
+  }
+
+  void getDarkMode(bool darkModeUser) {
+    bool darkMode = darkModeUser;
+    emit(darkModeWeather(darkmode: darkMode));
   }
 }
